@@ -14,37 +14,7 @@ public class Main {
                 TimeUnit.MINUTES,
                 new ArrayBlockingQueue<>(100)
         );
-        System.out.println("Pool size: " + threadPoolExecutor.getPoolSize());
-        threadPoolExecutor.prestartAllCoreThreads();
-        System.out.println("Pool size: " + threadPoolExecutor.getPoolSize());
 
-        threadPoolExecutor.execute(() -> System.out.println("Task 1 " + Thread.currentThread().getName()));
-        threadPoolExecutor.execute(() -> System.out.println("Task 2 " + Thread.currentThread().getName()));
-        threadPoolExecutor.execute(() -> System.out.println("Task 3 " + Thread.currentThread().getName()));
-        threadPoolExecutor.execute(() -> System.out.println("Task 1 " + Thread.currentThread().getName()));
-        threadPoolExecutor.execute(() -> System.out.println("Task 2 " + Thread.currentThread().getName()));
-        threadPoolExecutor.execute(() -> System.out.println("Task 3 " + Thread.currentThread().getName()));
-        threadPoolExecutor.execute(() -> System.out.println("Task 1 " + Thread.currentThread().getName()));
-        threadPoolExecutor.execute(() -> System.out.println("Task 2 " + Thread.currentThread().getName()));
-        threadPoolExecutor.execute(() -> System.out.println("Task 3 " + Thread.currentThread().getName()));
-        threadPoolExecutor.execute(() -> System.out.println("Task 1 " + Thread.currentThread().getName()));
-        threadPoolExecutor.execute(() -> System.out.println("Task 2 " + Thread.currentThread().getName()));
-        threadPoolExecutor.execute(() -> System.out.println("Task 3 " + Thread.currentThread().getName()));
-        threadPoolExecutor.execute(() -> System.out.println("Task 1 " + Thread.currentThread().getName()));
-        threadPoolExecutor.execute(() -> System.out.println("Task 2 " + Thread.currentThread().getName()));
-        threadPoolExecutor.execute(() -> System.out.println("Task 3 " + Thread.currentThread().getName()));
-
-        System.out.println("Pool size: " + threadPoolExecutor.getPoolSize());
-
-        threadPoolExecutor.shutdownNow();
-        threadPoolExecutor.awaitTermination(5, TimeUnit.SECONDS);
-
-        //threadPoolExecutor.shutdown();
-
-
-        /*Future<String> future = threadPoolExecutor.submit(new CallableTask());
-future.ca
-        String result = future.get();*/
     }
 
     static class CallableTask implements Callable<String> {
