@@ -1,18 +1,43 @@
 package com.manik.multithreading.threadReusability.threadpool;
 
 
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.Arrays;
+import java.util.concurrent.*;
 
 public class Main {
-    public static void main(String[] args) {
-        ScheduledThreadPoolExecutor tpe = new ScheduledThreadPoolExecutor(1);
-        tpe.schedule(() -> System.out.println("Task 1"), 5, TimeUnit.SECONDS);
 
-        tpe.shutdown();
-        ScheduledFuture<?> future = tpe.scheduleAtFixedRate(() -> System.out.println("Task"), 5, 1, TimeUnit.SECONDS);
-        tpe.setExecuteExistingDelayedTasksAfterShutdownPolicy(true);
+    private static int[] array = new int[] {1, 2, 3, 4, 5, 6, 7, 8};
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        ForkJoinPool forkJoinPool = new ForkJoinPool(2);
 
+        Future<Void> future = forkJoinPool.submit(new IncrementTask(0, 8));
+        future.get();
+        System.out.println("The array is: " + Arrays.toString(array));
+    }
+
+    static class IncrementTask extends RecursiveAction {
+
+        private final int left;
+        private final int right;
+
+        public IncrementTask(int left, int right) {
+            this.left = left;
+            this.right = right;
+        }
+
+        @Override
+        protected void compute() {
+            if (right - left  < 2) {
+                for (int i = left; i < right; i++ ) {
+                    array[i]++;
+                }
+            } else {
+                int mid = (left + right) / 2;
+                invokeAll(
+                        new IncrementTask(left, mid),
+                        new IncrementTask(mid, right)
+                );
+            }
+        }
     }
 }
